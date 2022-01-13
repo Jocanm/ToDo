@@ -59,12 +59,12 @@ export const createTodo = async(req, res) => {
 
 export const updateTodo = async(req, res) => {
 
-    const {id:todoId} = req.params
+    const {id} = req.params
 
     try {
         
         let todoUpdated = await todo.findUnique({
-            where:{id:todoId}
+            where:{id}
         })
 
         if(!todoUpdated){
@@ -75,7 +75,7 @@ export const updateTodo = async(req, res) => {
         }
 
         todoUpdated = await todo.update({
-            where:{id:todoId},
+            where:{id},
             data:req.body
         })
 
@@ -97,6 +97,36 @@ export const updateTodo = async(req, res) => {
 
 export const deleteTodo = async(req, res) => {
 
-    res.send("Ruta para eliminar un todo")
+    const {id} = req.params
+
+    try {
+        
+        let todoToDelete = await todo.findUnique({
+            where: {id}
+        })
+
+        if(!todoToDelete) {
+            return res.status(404).json({
+                ok:false,
+                msg:"Todo to delete does not exist"
+            })
+        }
+
+        await todo.delete({
+            where: {id}
+        })
+
+        res.json({
+            ok:true,
+            msg:"Todo deleted successfully"
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok:false,
+            msg:"Internal error"
+        })
+    }
 
 }

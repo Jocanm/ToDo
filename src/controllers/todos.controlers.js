@@ -84,6 +84,7 @@ export const updateTodo = async(req, res) => {
             msg:"Todo updated successfully",
             todo:todoUpdated
         })
+        // 
 
     } catch (error) {
         console.log(error);

@@ -4,7 +4,7 @@ import express from 'express'
 import { check } from 'express-validator'
 import { validateFields } from '../../middlewares/validateFields.js'
 import { validateJwtToken } from '../../middlewares/validateToken.js'
-import { createTodo, deleteTodo, getTodos, updateTodo } from '../controllers/todos.controlers.js'
+import { createManyTodos, createTodo, deleteTodo, getTodos, updateTodo } from '../controllers/todos.controlers.js'
 
 export const todosRouter = express.Router()
 
@@ -14,6 +14,7 @@ todosRouter.use( validateJwtToken )
 //Ruta para traer todos los todos de un usuario
 todosRouter.get("/",getTodos)
 
+
 //Ruta para crear un nuevo todo
 todosRouter.post(
     "/",
@@ -22,6 +23,12 @@ todosRouter.post(
         validateFields
     ],
     createTodo
+    )
+        
+//Ruta para crear varios todos que vienen de la API de catfact
+todosRouter.post(
+    "/many",
+    createManyTodos
 )
 
 todosRouter.put(

@@ -8,17 +8,17 @@ export const validateJwtToken = (req, res, next) => {
 
     const token = req.header('x-token');
 
-    if(!token){
+    if (!token) {
         return res.status(401).json({
-            ok:false,
-            msg:"There is no token in the request"
+            ok: false,
+            msg: "There is no token in the request"
         })
     }
 
     try {
-        
-        const {id,name,email} = jwt.verify(
-            token,process.env.SECRET_JWT_SEED
+
+        const { id, name, email } = jwt.verify(
+            token, process.env.SECRET_JWT_SEED
         );
 
         req.id = id;
@@ -27,8 +27,8 @@ export const validateJwtToken = (req, res, next) => {
 
     } catch (error) {
         return res.status(401).json({
-            ok:false,
-            msg:"Invalid token"
+            ok: false,
+            msg: "Invalid token"
         })
     }
 
